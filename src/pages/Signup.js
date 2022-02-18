@@ -1,4 +1,4 @@
-import SignupCard from "../components/SignupCard";
+import SignupCard from "../components/Card/SignupCard";
 
 function Signup() {
   return (

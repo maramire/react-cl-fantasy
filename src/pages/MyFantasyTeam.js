@@ -1,5 +1,5 @@
 function MyFantasyTeam() {
-  return <div>MyFantasyTeam page</div>;
+  return <div className="flex w-full">MyFantasyTeam page</div>;
 }
 
 export default MyFantasyTeam;

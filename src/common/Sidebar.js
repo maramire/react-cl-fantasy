@@ -8,7 +8,7 @@ function Sidebar() {
             to="my-fantasy-team"
             className="block w-full p-2 hover:bg-gray-200 focus:shadow-outline"
           >
-            <span>My Fantasy Team</span>
+            My Fantasy Team
           </Link>
         </li>
       </ul>

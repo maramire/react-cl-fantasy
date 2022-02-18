@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 function Topbar() {
   return (
-    <nav className="px-2 py-3 flex flex-row h-12 bg-white shadow-lg">
+    <nav className="px-2 py-4 flex flex-row h-14 bg-white shadow-lg">
       <ul className="flex">
-        <li className="px-1">
+        <li className="pl-7 px-2">
           <Link to="my-fantasy-team">This is a football app!</Link>
         </li>
       </ul>
