@@ -3,7 +3,7 @@ import TextInput from "../Input/TextInput";
 
 function LoginCard() {
   return (
-    <div className="mx-auto my-0 sm:w-3/12 bg-white p-8 rounded-lg shadow-lg">
+    <div className="mx-auto my-0 lg:w-3/12 bg-white p-8 rounded-lg shadow-lg">
       <div>
         <div>Iniciar Sesión</div>
         <form className="mt-5">
