@@ -1,16 +1,14 @@
 import { Outlet } from "react-router";
-import Navbar from "../common/Navbar";
+import Sidebar from "../common/Sidebar";
+import Topbar from "../common/Topbar";
 
 function MainLayout() {
   return (
     <>
+      <Topbar />
       <div className="flex bg-gray-100 h-screen">
-        <Navbar />
-        <div className="w-9/12 overflow-auto">
-          <div className="p-4 text-gray-500">
-            <Outlet />
-          </div>
-        </div>
+        <Sidebar />
+        <Outlet />
       </div>
     </>
   );
