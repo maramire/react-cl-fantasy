@@ -31,29 +31,34 @@ const useFetch = () => {
     return options;
   };
 
-  const getData = async (url, token = null) => {
-    setServerError(null);
-    const options = genOptionsFor("GET", token);
-    try {
-      return await fetchData(url, options);
-    } catch (error) {
-      setServerError(error);
-      return serverError;
-    }
-  };
-  const postData = async (url, token = null, body) => {
-    setServerError(null);
-    const options = genOptionsFor("POST", token, body);
-    console.log(options);
-    try {
-      return await fetchData(url, options);
-    } catch (error) {
-      setServerError(error);
-      return serverError;
-    }
-  };
+  const getData = useCallback(
+    async (url, token = null) => {
+      setServerError(null);
+      const options = genOptionsFor("GET", token);
+      try {
+        return await fetchData(url, options);
+      } catch (error) {
+        setServerError(error);
+      }
+    },
+    [fetchData]
+  );
 
-  return { getData, postData };
+  const postData = useCallback(
+    async (url, token = null, body) => {
+      setServerError(null);
+      const options = genOptionsFor("POST", token, body);
+      console.log(options);
+      try {
+        return await fetchData(url, options);
+      } catch (error) {
+        setServerError(error);
+      }
+    },
+    [fetchData]
+  );
+
+  return { getData, postData, serverError };
 };
 
 export default useFetch;
