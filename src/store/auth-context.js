@@ -10,15 +10,20 @@ export const AuthContextProvider = (props) => {
   ]);
 
   const login = (data) => {
-    const token = data.token.split(" ")[1];
-    setCookie("token", token, {
-      path: "/",
-      expires: new Date(new Date().getTime() + 1000 * 86400),
-    });
-    setCookie("isLoggedIn", true, {
-      path: "/",
-      expires: new Date(new Date().getTime() + 1000 * 86400),
-    });
+    console.log(data);
+    if (data.success) {
+      const token = data.token.split(" ")[1];
+      setCookie("token", token, {
+        path: "/",
+        expires: new Date(new Date().getTime() + 1000 * 86400),
+      });
+      setCookie("isLoggedIn", true, {
+        path: "/",
+        expires: new Date(new Date().getTime() + 1000 * 86400),
+      });
+    } else {
+      throw new Error(data.msg);
+    }
   };
   const logout = () => {
     removeCookie("token", { path: "/" });

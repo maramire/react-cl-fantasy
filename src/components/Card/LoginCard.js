@@ -3,12 +3,17 @@ import TextInput from "../Input/TextInput";
 import { useContext, useState } from "react";
 import AuthContext from "../../store/auth-context";
 import useFetch from "../../hooks/use-fetch";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function LoginCard() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const authContext = useContext(AuthContext);
-  const { fetchData } = useFetch();
+  let navigate = useNavigate();
+  let location = useLocation();
+  const { postData } = useFetch();
+
+  let from = location.state?.from?.pathname || "/";
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -20,17 +25,16 @@ function LoginCard() {
 
   const loginHandler = async (event) => {
     event.preventDefault();
+
     const url = `http://localhost:3000/login`;
-    const options = {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    fetchData(url, options).then((data) => {
-      authContext.login(data);
-    });
+    postData(url, { username, password })
+      .then((data) => {
+        authContext.login(data);
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
