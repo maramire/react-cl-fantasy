@@ -26,8 +26,8 @@ function LoginCard() {
   const loginHandler = async (event) => {
     event.preventDefault();
 
-    const url = `http://localhost:3000/login`;
-    postData(url, { username, password })
+    const url = `http://localhost:8080/login`;
+    postData(url, null, { username, password })
       .then((data) => {
         authContext.login(data);
         navigate(from, { replace: true });

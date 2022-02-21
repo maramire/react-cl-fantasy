@@ -8,6 +8,7 @@ const useFetch = () => {
 
   const fetchData = useCallback(async (url, options) => {
     try {
+      console.log(url, options);
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error("The data can't be fetched in this moment.");
@@ -19,17 +20,20 @@ const useFetch = () => {
     }
   }, []);
 
-  const genOptionsFor = (method, body = null) => {
+  const genOptionsFor = (method, token, withBody = null) => {
     const options = {};
-    options.headers = { "Content-Type": "application/json" };
+    options.headers = {
+      "Content-Type": "application/json",
+    };
     options.method = method;
-    options.body = JSON.stringify(body);
+    if (withBody) options.body = JSON.stringify(withBody);
+    if (token) options.headers.Authorization = "Bearer " + token;
     return options;
   };
 
-  const getData = async (url) => {
+  const getData = async (url, token = null) => {
     setServerError(null);
-    const options = genOptionsFor("GET");
+    const options = genOptionsFor("GET", token);
     try {
       return await fetchData(url, options);
     } catch (error) {
@@ -37,9 +41,9 @@ const useFetch = () => {
       return serverError;
     }
   };
-  const postData = async (url, body) => {
+  const postData = async (url, token = null, body) => {
     setServerError(null);
-    const options = genOptionsFor("POST", body);
+    const options = genOptionsFor("POST", token, body);
     console.log(options);
     try {
       return await fetchData(url, options);
