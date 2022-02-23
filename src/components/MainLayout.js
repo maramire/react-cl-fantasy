@@ -9,7 +9,7 @@ function MainLayout() {
   return (
     <>
       <Topbar />
-      <div className="flex bg-gray-100 h-screen">
+      <div className="flex bg-slate-900 h-screen">
         {authContext.isLoggedIn && <Sidebar />}
         <Outlet />
       </div>

@@ -3,7 +3,7 @@ import PasswordInput from "../Input/PasswordInput";
 
 function SignupCard(props) {
   return (
-    <div className="mx-auto my-0 lg:w-3/12 bg-white p-8 rounded-lg shadow-lg">
+    <div className="mx-auto my-0 lg:w-3/12 bg-slate-300 p-8 rounded-lg shadow-lg">
       <div>
         <div>Registrarse</div>
         <form className="mt-5">

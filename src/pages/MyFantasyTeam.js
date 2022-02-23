@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
+import FantasyTeamDetail from "../components/FantasyTeam/FantasyTeamDetail";
 import useFetch from "../hooks/use-fetch";
 
 function MyFantasyTeam() {
@@ -30,9 +31,9 @@ function MyFantasyTeam() {
     <>
       {isLoading && <p>Loading...</p>}
       {!isLoading && (
-        <div className="flex flex-col justify-center w-full">
+        <div className="flex flex-col w-full">
           {!hasFantasyTeam && <Navigate to="new" />}
-          {hasFantasyTeam && <p>Tu equipo se llama {fantasyTeam.name}</p>}
+          {hasFantasyTeam && <FantasyTeamDetail fantasyTeam={fantasyTeam} />}
         </div>
       )}
     </>

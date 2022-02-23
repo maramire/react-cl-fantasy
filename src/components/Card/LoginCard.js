@@ -38,7 +38,7 @@ function LoginCard() {
   };
 
   return (
-    <div className="mx-auto my-0 lg:w-3/12 bg-white p-8 rounded-lg shadow-lg">
+    <div className="mx-auto my-0 lg:w-3/12 bg-slate-300 p-8 rounded-lg shadow-lg">
       <div>
         <div>Iniciar Sesión</div>
         <form className="mt-5">
@@ -58,7 +58,7 @@ function LoginCard() {
             />
           </div>
           <button
-            className="mt-4 text-white w-full p-3 bg-blue-700 rounded-full "
+            className="mt-4 w-full p-3 bg-blue-700 rounded-full text-white"
             onClick={loginHandler}
           >
             Iniciar Sesión

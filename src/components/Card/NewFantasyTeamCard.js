@@ -45,7 +45,7 @@ function NewFantasyTeamCard() {
               />
             </div>
             <button
-              className="mt-4 text-white w-full p-3 bg-blue-700 rounded-full "
+              className="mt-4 text-black w-full p-3 bg-blue-700 rounded-full "
               onClick={createHandler}
             >
               Crear
