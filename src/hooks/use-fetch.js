@@ -8,7 +8,7 @@ const useFetch = () => {
 
   const fetchData = useCallback(async (url, options) => {
     try {
-      console.log(url, options);
+      console.log("Fetching " + url);
       const response = await fetch(url, options);
       if (!response.ok) {
         throw new Error("The data can't be fetched in this moment.");
@@ -48,7 +48,6 @@ const useFetch = () => {
     async (url, token = null, body) => {
       setServerError(null);
       const options = genOptionsFor("POST", token, body);
-      console.log(options);
       try {
         return await fetchData(url, options);
       } catch (error) {

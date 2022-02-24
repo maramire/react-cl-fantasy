@@ -17,7 +17,6 @@ function MyFantasyTeam() {
         "http://localhost:8080/fantasyTeams",
         cookies.token
       );
-      console.log(data);
       if (data.fantasyTeam) {
         setHasFantasyTeam(true);
         setFantasyTeam(data.fantasyTeam);

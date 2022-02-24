@@ -13,7 +13,6 @@ function AddPlayerModal(props) {
     try {
       const players = await getData(playersUrl, null);
       setPlayers(players);
-      console.log(players);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -38,6 +37,7 @@ function AddPlayerModal(props) {
 
   return (
     <ReactModal
+      ariaHideApp={false}
       className="absolute inset-40 border bg-slate-800 p-4 text-white"
       overlayClassName="fixed inset-0 bg-black/70"
       isOpen={props.showModal}
@@ -73,6 +73,7 @@ function AddPlayerModal(props) {
                 {players.map((player) => {
                   return (
                     <tr
+                      key={player._id}
                       onClick={handleRowSelect.bind(this, player)}
                       className="cursor-pointer hover:bg-slate-700 dark:hover:bg-gray-700"
                     >

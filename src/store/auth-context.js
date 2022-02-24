@@ -10,7 +10,6 @@ export const AuthContextProvider = (props) => {
   ]);
 
   const login = (data) => {
-    console.log(data);
     if (data.success) {
       const token = data.token.split(" ")[1];
       setCookie("token", token, {
