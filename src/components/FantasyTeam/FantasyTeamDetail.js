@@ -8,12 +8,13 @@ import { BsXCircleFill } from "react-icons/bs";
 import FantasyTeamLineup from "./FantasyTeamLineup";
 
 function FantasyTeamDetail(props) {
-  const [showModal, setShowModal] = useState(false);
-  const [position, setPosition] = useState("");
   const { getData } = useFetch();
-  const [fantasyTeamPlayers, setFantasyTeamPlayers] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [cookies] = useCookies(["token", "isLoggedIn"]);
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [position, setPosition] = useState("");
+  const [fantasyTeamPlayers, setFantasyTeamPlayers] = useState(null);
+  const [selectedFormation, setSelectedFormation] = useState("4-4-2");
 
   const handleOpenModal = (position, e) => {
     setShowModal(true);
@@ -24,29 +25,15 @@ function FantasyTeamDetail(props) {
   };
 
   const fetchPlayers = useCallback(async () => {
-    const myFantasyTeamUrl = `http://localhost:8080/fantasyTeams`;
     try {
-      const data = await getData(myFantasyTeamUrl, cookies.token);
-      const playersUrl = `http://localhost:8080/fantasyTeams/${data.fantasyTeam._id}/fantasyTeamPlayers?matchdayId=620ebe9fa8b23e24b6231b96`;
+      const playersUrl = `http://localhost:8080/fantasyTeams/${props.fantasyTeam._id}/fantasyTeamPlayers?matchdayId=620ebe9fa8b23e24b6231b96`;
       const players = await getData(playersUrl, cookies.token);
       setFantasyTeamPlayers(players);
       setIsLoading(false);
-      console.log(players);
     } catch (err) {
       console.log(err);
     }
-  }, [getData, cookies.token]);
-
-  const playersByPosition = (position) => {
-    return fantasyTeamPlayers.filter(
-      (ftsyPlayer) =>
-        ftsyPlayer.player.position === position && ftsyPlayer.isStarter
-    );
-  };
-
-  const subPlayers = () => {
-    return fantasyTeamPlayers.filter((ftsyPlayer) => !ftsyPlayer.isStarter);
-  };
+  }, [getData, cookies.token, props.fantasyTeam._id]);
 
   const checkIfTeamContains = (number, position) => {
     return (
@@ -54,6 +41,10 @@ function FantasyTeamDetail(props) {
         (ftsyPlayer) => ftsyPlayer.player.position === position
       ).length === number
     );
+  };
+
+  const onChangeFormation = (e) => {
+    setSelectedFormation(e.target.value);
   };
 
   useEffect(() => {
@@ -84,10 +75,15 @@ function FantasyTeamDetail(props) {
                 </div>
                 <div className="p-3">
                   <h1 className="mb-2 text-white">Formación</h1>
-                  <select className="w-full" name="formation" id="formation">
-                    <option value="4-4-2" selected>
-                      4-4-2
-                    </option>
+                  <select
+                    className="w-full"
+                    name="formation"
+                    id="formation"
+                    onChange={onChangeFormation}
+                    value={selectedFormation}
+                  >
+                    <option value="4-4-2">4-4-2</option>
+                    <option value="4-3-3">4-3-3</option>
                   </select>
                 </div>
                 <div className="p-3">
@@ -136,9 +132,10 @@ function FantasyTeamDetail(props) {
             </div>
             <div className="col-span-4">
               <FantasyTeamLineup
-                playersByPosition={playersByPosition}
+                fantasyTeamPlayers={fantasyTeamPlayers}
+                setFantasyTeamPlayers={setFantasyTeamPlayers}
+                formation={selectedFormation}
                 handleOpenModal={handleOpenModal}
-                subPlayers={subPlayers}
               />
             </div>
             <div className="col-span-2"></div>
