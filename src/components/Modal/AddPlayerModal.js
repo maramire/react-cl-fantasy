@@ -1,23 +1,26 @@
 import { useCallback, useEffect, useState } from "react";
-import ReactModal from "react-modal";
-import useFetch from "../../hooks/use-fetch";
 import { BsXCircleFill } from "react-icons/bs";
+import { useServices } from "../../hooks/use-services";
+import ReactModal from "react-modal";
+import PlayersTable from "../Table/PlayersTable";
 
 function AddPlayerModal(props) {
-  const { getData } = useFetch();
+  const { getPlayersByPosition } = useServices();
   const [players, setPlayers] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const tableColumns = ["Seleccionar", "Jugador", "Club", "Valor"];
+
   const fetchPlayers = useCallback(async () => {
-    const playersUrl = `http://localhost:8080/players?position=${props.position}`;
     try {
-      const players = await getData(playersUrl, null);
+      const players = await getPlayersByPosition(props.position);
       setPlayers(players);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
-  }, [getData, props.position]);
+  }, [getPlayersByPosition, props.position]);
 
   useEffect(() => {
     if (props.showModal) {
@@ -60,40 +63,13 @@ function AddPlayerModal(props) {
         </div>
         {!isLoading && (
           <div className="flex justify-center px-6 overflow-x-auto">
-            <table className="min-w-full">
-              <thead>
-                <tr>
-                  <th>Seleccionar</th>
-                  <th>Jugador</th>
-                  <th>Equipo</th>
-                  <th>Valor</th>
-                </tr>
-              </thead>
-              <tbody>
-                {players.map((player) => {
-                  return (
-                    <tr
-                      key={player._id}
-                      onClick={handleRowSelect.bind(this, player)}
-                      className="cursor-pointer hover:bg-slate-700 dark:hover:bg-gray-700"
-                    >
-                      <td>
-                        <input
-                          value={player._id}
-                          name="player"
-                          onChange={handleRadioChange}
-                          checked={selectedPlayer === player._id}
-                          type="radio"
-                        />
-                      </td>
-                      <td>{player.name}</td>
-                      <td>{player.club.name}</td>
-                      <td>0</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <PlayersTable
+              columns={tableColumns}
+              data={players}
+              selectedPlayer={selectedPlayer}
+              handleRowSelect={handleRowSelect}
+              handleRadioChange={handleRadioChange}
+            />
           </div>
         )}
       </div>

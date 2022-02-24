@@ -1,9 +1,13 @@
 import React from "react";
 import { useCookies } from "react-cookie";
+import { addDaysToDate } from "../utils/utils";
 
-const AuthContext = React.createContext();
+const cookieOptions = {
+  path: "/",
+  expires: addDaysToDate(new Date(), 1),
+};
 
-export const AuthContextProvider = (props) => {
+const AuthContextProvider = (props) => {
   const [cookies, setCookie, removeCookie] = useCookies([
     "token",
     "isLoggedIn",
@@ -12,14 +16,8 @@ export const AuthContextProvider = (props) => {
   const login = (data) => {
     if (data.success) {
       const token = data.token.split(" ")[1];
-      setCookie("token", token, {
-        path: "/",
-        expires: new Date(new Date().getTime() + 1000 * 86400),
-      });
-      setCookie("isLoggedIn", true, {
-        path: "/",
-        expires: new Date(new Date().getTime() + 1000 * 86400),
-      });
+      setCookie("token", token, cookieOptions);
+      setCookie("isLoggedIn", true, cookieOptions);
     } else {
       throw new Error(data.msg);
     }
@@ -42,4 +40,7 @@ export const AuthContextProvider = (props) => {
   );
 };
 
+const AuthContext = React.createContext();
+
 export default AuthContext;
+export { AuthContextProvider };

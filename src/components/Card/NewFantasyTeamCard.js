@@ -1,33 +1,32 @@
 import { useState } from "react";
 import TextInput from "../Input/TextInput";
-import useFetch from "../../hooks/use-fetch";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useServices } from "../../hooks/use-services";
 
 function NewFantasyTeamCard() {
+  const { createFantasyTeam } = useServices();
+  const [cookies] = useCookies(["token", "isLoggedIn"]);
   const [name, setName] = useState("");
+
   let navigate = useNavigate();
   let location = useLocation();
-  const { postData } = useFetch();
-  const [cookies] = useCookies(["token", "isLoggedIn"]);
-
-  const onChangeName = (e) => {
-    setName(e.target.value);
-  };
 
   let from = location.state?.from?.pathname || "/my-fantasy-team";
 
   const createHandler = async (event) => {
     event.preventDefault();
 
-    const url = `http://localhost:8080/fantasyTeams`;
-    postData(url, cookies.token, { name })
-      .then((data) => {
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      await createFantasyTeam(name, cookies);
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onChangeName = (e) => {
+    setName(e.target.value);
   };
 
   return (

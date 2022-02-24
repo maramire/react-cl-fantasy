@@ -1,31 +1,34 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Navigate } from "react-router-dom";
+import { useServices } from "../hooks/use-services";
+
 import FantasyTeamDetail from "../components/FantasyTeam/FantasyTeamDetail";
-import useFetch from "../hooks/use-fetch";
 
 function MyFantasyTeam() {
-  const { getData } = useFetch();
-  const [fantasyTeam, setFantasyTeam] = useState(null);
   const [cookies] = useCookies(["token", "isLoggedIn"]);
+  const { getMyFantasyTeam } = useServices();
+  const [fantasyTeam, setFantasyTeam] = useState(null);
   const [hasFantasyTeam, setHasFantasyTeam] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function init() {
-      const data = await getData(
-        "http://localhost:8080/fantasyTeams",
-        cookies.token
-      );
-      if (data.fantasyTeam) {
+  const init = useCallback(async () => {
+    try {
+      const fantasyTeam = await getMyFantasyTeam(cookies);
+      if (fantasyTeam) {
         setHasFantasyTeam(true);
-        setFantasyTeam(data.fantasyTeam);
+        setFantasyTeam(fantasyTeam);
       }
       setIsLoading(false);
+    } catch (error) {
+      console.log(error);
     }
+  }, [cookies, getMyFantasyTeam]);
 
+  useEffect(() => {
     init();
-  }, [getData, cookies.token]);
+  }, [init]);
+
   return (
     <>
       {isLoading && <p>Loading...</p>}

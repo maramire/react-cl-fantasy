@@ -1,17 +1,18 @@
+import { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useServices } from "../../hooks/use-services";
+
+import AuthContext from "../../store/auth-context";
 import PasswordInput from "../Input/PasswordInput";
 import TextInput from "../Input/TextInput";
-import { useContext, useState } from "react";
-import AuthContext from "../../store/auth-context";
-import useFetch from "../../hooks/use-fetch";
-import { useLocation, useNavigate } from "react-router-dom";
 
 function LoginCard() {
+  const authContext = useContext(AuthContext);
+  const { login } = useServices();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const authContext = useContext(AuthContext);
   let navigate = useNavigate();
   let location = useLocation();
-  const { postData } = useFetch();
 
   let from = location.state?.from?.pathname || "/";
 
@@ -26,15 +27,13 @@ function LoginCard() {
   const loginHandler = async (event) => {
     event.preventDefault();
 
-    const url = `http://localhost:8080/login`;
-    postData(url, null, { username, password })
-      .then((data) => {
-        authContext.login(data);
-        navigate(from, { replace: true });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const successLoginData = await login({ username, password });
+      authContext.login(successLoginData);
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

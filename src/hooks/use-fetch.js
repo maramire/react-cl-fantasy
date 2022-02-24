@@ -1,13 +1,13 @@
 import { useState, useCallback } from "react";
 
-/*
-    useFetch receives a method (GET, POST, etc), a url to fetch content and optional body.
-*/
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 const useFetch = () => {
   const [serverError, setServerError] = useState(null);
 
-  const fetchData = useCallback(async (url, options) => {
+  const fetchData = useCallback(async (path, options) => {
     try {
+      const url = API_BASE_URL + path;
       console.log("Fetching " + url);
       const response = await fetch(url, options);
       if (!response.ok) {
@@ -31,12 +31,12 @@ const useFetch = () => {
     return options;
   };
 
-  const getData = useCallback(
-    async (url, token = null) => {
+  const getDataFromServer = useCallback(
+    async (path, token = null) => {
       setServerError(null);
       const options = genOptionsFor("GET", token);
       try {
-        return await fetchData(url, options);
+        return await fetchData(path, options);
       } catch (error) {
         setServerError(error);
       }
@@ -44,12 +44,12 @@ const useFetch = () => {
     [fetchData]
   );
 
-  const postData = useCallback(
-    async (url, token = null, body) => {
+  const postDataToServer = useCallback(
+    async (path, token = null, body) => {
       setServerError(null);
       const options = genOptionsFor("POST", token, body);
       try {
-        return await fetchData(url, options);
+        return await fetchData(path, options);
       } catch (error) {
         setServerError(error);
       }
@@ -57,7 +57,7 @@ const useFetch = () => {
     [fetchData]
   );
 
-  return { getData, postData, serverError };
+  return { getDataFromServer, postDataToServer, serverError };
 };
 
-export default useFetch;
+export { useFetch };
