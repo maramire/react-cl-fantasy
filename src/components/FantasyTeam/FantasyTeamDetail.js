@@ -6,25 +6,26 @@ import FantasyTeamLineup from "./FantasyTeamLineup";
 import FantasyTeamInfo from "./FantasyTeamInfo";
 import AddPlayerModal from "../Modal/AddPlayerModal";
 
+const matchday = "620ebe9fa8b23e24b6231b96";
+
 function FantasyTeamDetail(props) {
   const [cookies] = useCookies(["token", "isLoggedIn"]);
   const { getMyFantasyTeamPlayers } = useServices();
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [position, setPosition] = useState("");
-  const [fantasyTeamPlayers, setFantasyTeamPlayers] = useState(null);
-  const [selectedFormation, setSelectedFormation] = useState("4-4-2");
+  const [modalPlayerPosition, setModalPlayerPosition] = useState("");
+  const [players, setPlayers] = useState(null);
+  const [formation, setFormation] = useState("4-4-2");
 
   const fetchPlayers = useCallback(async () => {
     try {
       const fantasyTeamId = props.fantasyTeam._id;
-      const matchday = "620ebe9fa8b23e24b6231b96";
       const players = await getMyFantasyTeamPlayers(
         fantasyTeamId,
         matchday,
         cookies
       );
-      setFantasyTeamPlayers(players);
+      setPlayers(players);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -37,15 +38,14 @@ function FantasyTeamDetail(props) {
 
   const checkIfTeamContains = (number, position) => {
     return (
-      fantasyTeamPlayers.filter(
-        (ftsyPlayer) => ftsyPlayer.player.position === position
-      ).length === number
+      players.filter((ftsyPlayer) => ftsyPlayer.player.position === position)
+        .length === number
     );
   };
 
   const handleOpenModal = (position, e) => {
     setShowModal(true);
-    setPosition(position);
+    setModalPlayerPosition(position);
   };
 
   const handleCloseModal = () => {
@@ -57,7 +57,7 @@ function FantasyTeamDetail(props) {
       <div className="p-8 grid grid-cols-8 gap-4">
         <AddPlayerModal
           showModal={showModal}
-          position={position}
+          position={modalPlayerPosition}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
         />
@@ -69,15 +69,16 @@ function FantasyTeamDetail(props) {
             <div className="flex flex-row col-span-2">
               <FantasyTeamInfo
                 fantasyTeam={props.fantasyTeam}
-                selectedFormation={selectedFormation}
-                setSelectedFormation={selectedFormation}
+                formation={formation}
+                setFormation={formation}
                 checkIfTeamContains={checkIfTeamContains}
               />
             </div>
             <div className="col-span-4">
               <FantasyTeamLineup
-                fantasyTeamPlayers={fantasyTeamPlayers}
-                setFantasyTeamPlayers={setFantasyTeamPlayers}
+                players={players}
+                formation={formation}
+                setPlayers={setPlayers}
                 handleOpenModal={handleOpenModal}
               />
             </div>

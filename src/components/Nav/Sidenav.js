@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-function Sidebar() {
+function Sidenav() {
   return (
     <div className="w-2/12 bg-slate-800 shadow-lg">
       <ul className="mt-10">
@@ -16,4 +16,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default Sidenav;

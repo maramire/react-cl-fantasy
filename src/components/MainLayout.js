@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { Outlet } from "react-router";
-import Sidebar from "../common/Sidebar";
-import Topbar from "../common/Topbar";
+import Sidenav from "../components/Nav/Sidenav";
+import Topnav from "../components/Nav/Topnav";
 import AuthContext from "../store/auth-context";
 
 function MainLayout() {
   const authContext = useContext(AuthContext);
   return (
     <>
-      <Topbar />
+      <Topnav />
       <div className="flex bg-slate-900 h-screen">
-        {authContext.isLoggedIn && <Sidebar />}
+        {authContext.isLoggedIn && <Sidenav />}
         <Outlet />
       </div>
     </>

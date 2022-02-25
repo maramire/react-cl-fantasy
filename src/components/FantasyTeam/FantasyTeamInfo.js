@@ -2,7 +2,7 @@ import { BsFillCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 
 function FantasyTeamInfo(props) {
   const onChangeFormation = (e) => {
-    props.setSelectedFormation(e.target.value);
+    props.setFormation(e.target.value);
   };
 
   return (
@@ -18,7 +18,7 @@ function FantasyTeamInfo(props) {
           name="formation"
           id="formation"
           onChange={onChangeFormation}
-          value={props.selectedFormation}
+          value={props.formation}
         >
           <option value="4-4-2">4-4-2</option>
           <option value="4-3-3">4-3-3</option>

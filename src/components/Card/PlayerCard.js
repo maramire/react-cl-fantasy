@@ -3,8 +3,8 @@ import { FaTshirt } from "react-icons/fa";
 
 function PlayerCard(props) {
   const onDragStart = (e) => {
-    const ftsyPlayerId = e.target.id;
-    e.dataTransfer.setData("player_id", ftsyPlayerId);
+    const fantasyPlayerId = e.target.id;
+    e.dataTransfer.setData("player_id", fantasyPlayerId);
     setTimeout(() => {
       props.setDraggedPosition(props.position);
     }, 0);
@@ -48,9 +48,9 @@ function PlayerCard(props) {
         )}
         {props.isSelected && (
           <button
-            title={props.ftsyPlayer.player.name}
+            title={props.fantasyPlayer.player.name}
             position={props.position}
-            id={props.ftsyPlayer._id}
+            id={props.fantasyPlayer._id}
             draggable={props.draggable}
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
@@ -63,7 +63,7 @@ function PlayerCard(props) {
             }
           >
             <div className="h-3/6 p-2">
-              {props.ftsyPlayer.player.position === "Portero" ? (
+              {props.fantasyPlayer.player.position === "Portero" ? (
                 <FaTshirt className="w-full h-full text-yellow-300" />
               ) : (
                 <FaTshirt className="w-full h-full text-white" />
@@ -71,7 +71,7 @@ function PlayerCard(props) {
             </div>
             <div className="h-3/6">
               <p className="inline-block align-baseline text-xs text-white">
-                {truncateName(props.ftsyPlayer.player.name)}
+                {truncateName(props.fantasyPlayer.player.name)}
               </p>
             </div>
           </button>

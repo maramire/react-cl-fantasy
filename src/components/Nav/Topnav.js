@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../store/auth-context";
+import AuthContext from "../../store/auth-context";
 import { BsHouseFill } from "react-icons/bs";
 
-function Topbar() {
+function Topnav() {
   const authContext = useContext(AuthContext);
   return (
     <nav className="px-2 py-4 flex flex-row h-14 bg-slate-700 shadow-lg">
@@ -28,4 +28,4 @@ function Topbar() {
   );
 }
 
-export default Topbar;
+export default Topnav;

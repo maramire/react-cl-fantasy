@@ -12,7 +12,7 @@ function MyFantasyTeam() {
   const [hasFantasyTeam, setHasFantasyTeam] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const init = useCallback(async () => {
+  const checkIfFantasyTeam = useCallback(async () => {
     try {
       const fantasyTeam = await getMyFantasyTeam(cookies);
       if (fantasyTeam) {
@@ -26,8 +26,8 @@ function MyFantasyTeam() {
   }, [cookies, getMyFantasyTeam]);
 
   useEffect(() => {
-    init();
-  }, [init]);
+    checkIfFantasyTeam();
+  }, [checkIfFantasyTeam]);
 
   return (
     <>

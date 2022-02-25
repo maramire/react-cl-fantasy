@@ -6,55 +6,53 @@ function FantasyTeamLineup(props) {
   const [draggedPosition, setDraggedPosition] = useState("");
 
   const getPlayersByPosition = (position) => {
-    return props.fantasyTeamPlayers.filter(
-      (ftsyPlayer) =>
-        ftsyPlayer.player.position === position && ftsyPlayer.isStarter
+    return props.players.filter(
+      (fantasyPlayer) =>
+        fantasyPlayer.player.position === position && fantasyPlayer.isStarter
     );
   };
 
   const getSubPlayers = () => {
-    return props.fantasyTeamPlayers.filter(
-      (ftsyPlayer) => !ftsyPlayer.isStarter
-    );
+    return props.players.filter((fantasyPlayer) => !fantasyPlayer.isStarter);
   };
 
   const changeSubWithStarter = (subPlayerId, starterPlayerId) => {
-    let updatedFantasyPlayers = props.fantasyTeamPlayers.map((ftsyPlayer) => {
-      if (ftsyPlayer._id === subPlayerId) {
-        return { ...ftsyPlayer, isStarter: !ftsyPlayer.isStarter };
-      } else if (ftsyPlayer._id === starterPlayerId) {
-        return { ...ftsyPlayer, isStarter: !ftsyPlayer.isStarter };
+    let updatedFantasyPlayers = props.players.map((fantasyPlayer) => {
+      if (fantasyPlayer._id === subPlayerId) {
+        return { ...fantasyPlayer, isStarter: !fantasyPlayer.isStarter };
+      } else if (fantasyPlayer._id === starterPlayerId) {
+        return { ...fantasyPlayer, isStarter: !fantasyPlayer.isStarter };
       }
-      return ftsyPlayer;
+      return fantasyPlayer;
     });
-    props.setFantasyTeamPlayers(updatedFantasyPlayers);
+    props.setPlayers(updatedFantasyPlayers);
   };
 
-  const checkIfPlayersCanBeChanged = (ftsyPlayer1Id, ftsyPlayer2Id) => {
-    const ftsyPlayer1 = props.fantasyTeamPlayers.find((ftsyPlayer) => {
-      return ftsyPlayer._id === ftsyPlayer1Id;
+  const checkIfPlayersCanBeChanged = (fantasyPlayer1Id, fantasyPlayer2Id) => {
+    const fantasyPlayer1 = props.players.find((fantasyPlayer) => {
+      return fantasyPlayer._id === fantasyPlayer1Id;
     });
-    const ftsyPlayer2 = props.fantasyTeamPlayers.find((ftsyPlayer) => {
-      return ftsyPlayer._id === ftsyPlayer2Id;
+    const fantasyPlayer2 = props.players.find((fantasyPlayer) => {
+      return fantasyPlayer._id === fantasyPlayer2Id;
     });
     return (
-      ftsyPlayer1.player.position === ftsyPlayer2.player.position &&
-      ftsyPlayer1Id !== ftsyPlayer2Id &&
-      ftsyPlayer1.isStarter !== ftsyPlayer2.isStarter
+      fantasyPlayer1.player.position === fantasyPlayer2.player.position &&
+      fantasyPlayer1Id !== fantasyPlayer2Id &&
+      fantasyPlayer1.isStarter !== fantasyPlayer2.isStarter
     );
   };
 
   return (
     <div className="grid grid-rows-5 bg-green-500 rounded">
       <div className="grid grid-flow-col auto-cols-max justify-center my-3">
-        {getPlayersByPosition("Portero").map((ftsyPlayer) => {
+        {getPlayersByPosition("Portero").map((fantasyPlayer) => {
           return (
             <PlayerCard
-              key={ftsyPlayer._id}
+              key={fantasyPlayer._id}
               changeSubWithStarter={changeSubWithStarter}
               checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
               position="Portero"
-              ftsyPlayer={ftsyPlayer}
+              fantasyPlayer={fantasyPlayer}
               handleOpenModal={props.handleOpenModal}
               isSelected={isSelected}
               setDraggedPosition={setDraggedPosition}
@@ -64,14 +62,14 @@ function FantasyTeamLineup(props) {
         })}
       </div>
       <div className="grid grid-flow-col auto-cols-max justify-center gap-x-5 my-3">
-        {getPlayersByPosition("Defensa").map((ftsyPlayer) => {
+        {getPlayersByPosition("Defensa").map((fantasyPlayer) => {
           return (
             <PlayerCard
-              key={ftsyPlayer._id}
+              key={fantasyPlayer._id}
               changeSubWithStarter={changeSubWithStarter}
               position="Defensa"
               checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
-              ftsyPlayer={ftsyPlayer}
+              fantasyPlayer={fantasyPlayer}
               handleOpenModal={props.handleOpenModal}
               setDraggedPosition={setDraggedPosition}
               isSelected={isSelected}
@@ -81,14 +79,14 @@ function FantasyTeamLineup(props) {
         })}
       </div>
       <div className="grid grid-flow-col auto-cols-max justify-center gap-x-5 my-3">
-        {getPlayersByPosition("Mediocampista").map((ftsyPlayer) => {
+        {getPlayersByPosition("Mediocampista").map((fantasyPlayer) => {
           return (
             <PlayerCard
-              key={ftsyPlayer._id}
+              key={fantasyPlayer._id}
               changeSubWithStarter={changeSubWithStarter}
               position="Mediocampista"
               checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
-              ftsyPlayer={ftsyPlayer}
+              fantasyPlayer={fantasyPlayer}
               handleOpenModal={props.handleOpenModal}
               setDraggedPosition={setDraggedPosition}
               isSelected={isSelected}
@@ -98,14 +96,14 @@ function FantasyTeamLineup(props) {
         })}
       </div>
       <div className="grid grid-flow-col auto-cols-max justify-center gap-x-5 my-4">
-        {getPlayersByPosition("Delantero").map((ftsyPlayer) => {
+        {getPlayersByPosition("Delantero").map((fantasyPlayer) => {
           return (
             <PlayerCard
-              key={ftsyPlayer._id}
+              key={fantasyPlayer._id}
               changeSubWithStarter={changeSubWithStarter}
               checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
               position="Delantero"
-              ftsyPlayer={ftsyPlayer}
+              fantasyPlayer={fantasyPlayer}
               handleOpenModal={props.handleOpenModal}
               setDraggedPosition={setDraggedPosition}
               isSelected={isSelected}
@@ -115,15 +113,15 @@ function FantasyTeamLineup(props) {
         })}
       </div>
       <div className="grid grid-flow-col auto-cols-max justify-center gap-x-5 my-4">
-        {getSubPlayers().map((ftsyPlayer) => {
+        {getSubPlayers().map((fantasyPlayer) => {
           return (
             <PlayerCard
-              key={ftsyPlayer._id}
+              key={fantasyPlayer._id}
               changeSubWithStarter={changeSubWithStarter}
-              position={ftsyPlayer.player.position}
+              position={fantasyPlayer.player.position}
               checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
               draggable="true"
-              ftsyPlayer={ftsyPlayer}
+              fantasyPlayer={fantasyPlayer}
               handleOpenModal={props.handleOpenModal}
               setDraggedPosition={setDraggedPosition}
               isSelected={isSelected}
