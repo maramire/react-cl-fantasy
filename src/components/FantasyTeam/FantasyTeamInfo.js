@@ -6,15 +6,15 @@ function FantasyTeamInfo(props) {
   };
 
   return (
-    <div className="my-auto">
-      <div className="p-3">
+    <div className="min-h-full my-auto">
+      <div className="mb-5">
         <h1 className="mb-2 text-white">Nombre de equipo</h1>
         <span className="text-gray-400">{props.fantasyTeam.name}</span>
       </div>
-      <div className="p-3">
+      <div className="mb-5">
         <h1 className="mb-2 text-white">Formación</h1>
         <select
-          className="w-full"
+          className="w-20"
           name="formation"
           id="formation"
           onChange={onChangeFormation}
@@ -24,14 +24,14 @@ function FantasyTeamInfo(props) {
           <option value="4-3-3">4-3-3</option>
         </select>
       </div>
-      <div className="p-3">
+      <div className="mb-5">
         <h1 className="mb-2 text-white">Presupuesto Disponible</h1>
-        <div className="flex justify-center">
+        <div className="flex">
           <BsFillCheckCircleFill className="m-1 text-green-700" />
           <span className="text-gray-400">1.000.000/1.000.000</span>
         </div>
       </div>
-      <div className="p-3">
+      <div className="mb-5">
         <h1 className="mb-2 text-white">El equipo tiene:</h1>
         <div className="flex justify-start">
           {props.checkIfTeamContains(2, "Portero") ? (

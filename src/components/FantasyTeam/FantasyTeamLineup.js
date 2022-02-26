@@ -2,7 +2,7 @@ import { useState } from "react";
 import PlayerCard from "../Card/PlayerCard";
 
 function FantasyTeamLineup(props) {
-  const [isSelected, setIsSelected] = useState(true);
+  const [isSelected] = useState(true);
   const [draggedPosition, setDraggedPosition] = useState("");
 
   const getPlayersByPosition = (position) => {
@@ -43,76 +43,74 @@ function FantasyTeamLineup(props) {
   };
 
   return (
-    <div className="grid grid-rows-5 bg-green-500 rounded">
-      <div className="grid grid-flow-col auto-cols-max justify-center my-3">
-        {getPlayersByPosition("Portero").map((fantasyPlayer) => {
-          return (
-            <PlayerCard
-              key={fantasyPlayer._id}
-              changeSubWithStarter={changeSubWithStarter}
-              checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
-              position="Portero"
-              fantasyPlayer={fantasyPlayer}
-              handleOpenModal={props.handleOpenModal}
-              isSelected={isSelected}
-              setDraggedPosition={setDraggedPosition}
-              hasOnDrag={"Portero" === draggedPosition}
-            />
-          );
-        })}
+    <>
+      <div className="h-[28rem] w-[28rem] flex flex-col bg-football-pitch bg-no-repeat bg-contain bg-top self-center gap-y-4">
+        <div className="flex flex-row justify-center gap-x-1 mt-5">
+          {getPlayersByPosition("Portero").map((fantasyPlayer) => {
+            return (
+              <PlayerCard
+                key={fantasyPlayer._id}
+                changeSubWithStarter={changeSubWithStarter}
+                checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
+                position="Portero"
+                fantasyPlayer={fantasyPlayer}
+                isSelected={isSelected}
+                setDraggedPosition={setDraggedPosition}
+                hasOnDrag={"Portero" === draggedPosition}
+              />
+            );
+          })}
+        </div>
+        <div className="flex flex-row justify-center gap-x-1">
+          {getPlayersByPosition("Defensa").map((fantasyPlayer) => {
+            return (
+              <PlayerCard
+                key={fantasyPlayer._id}
+                changeSubWithStarter={changeSubWithStarter}
+                position="Defensa"
+                checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
+                fantasyPlayer={fantasyPlayer}
+                setDraggedPosition={setDraggedPosition}
+                isSelected={isSelected}
+                hasOnDrag={"Defensa" === draggedPosition}
+              />
+            );
+          })}
+        </div>
+        <div className="flex flex-row justify-center gap-x-1">
+          {getPlayersByPosition("Mediocampista").map((fantasyPlayer) => {
+            return (
+              <PlayerCard
+                key={fantasyPlayer._id}
+                changeSubWithStarter={changeSubWithStarter}
+                position="Mediocampista"
+                checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
+                fantasyPlayer={fantasyPlayer}
+                setDraggedPosition={setDraggedPosition}
+                isSelected={isSelected}
+                hasOnDrag={"Mediocampista" === draggedPosition}
+              />
+            );
+          })}
+        </div>
+        <div className="flex flex-row justify-center gap-x-1">
+          {getPlayersByPosition("Delantero").map((fantasyPlayer) => {
+            return (
+              <PlayerCard
+                key={fantasyPlayer._id}
+                changeSubWithStarter={changeSubWithStarter}
+                checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
+                position="Delantero"
+                fantasyPlayer={fantasyPlayer}
+                setDraggedPosition={setDraggedPosition}
+                isSelected={isSelected}
+                hasOnDrag={"Delantero" === draggedPosition}
+              />
+            );
+          })}
+        </div>
       </div>
-      <div className="grid grid-flow-col auto-cols-max justify-center gap-x-5 my-3">
-        {getPlayersByPosition("Defensa").map((fantasyPlayer) => {
-          return (
-            <PlayerCard
-              key={fantasyPlayer._id}
-              changeSubWithStarter={changeSubWithStarter}
-              position="Defensa"
-              checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
-              fantasyPlayer={fantasyPlayer}
-              handleOpenModal={props.handleOpenModal}
-              setDraggedPosition={setDraggedPosition}
-              isSelected={isSelected}
-              hasOnDrag={"Defensa" === draggedPosition}
-            />
-          );
-        })}
-      </div>
-      <div className="grid grid-flow-col auto-cols-max justify-center gap-x-5 my-3">
-        {getPlayersByPosition("Mediocampista").map((fantasyPlayer) => {
-          return (
-            <PlayerCard
-              key={fantasyPlayer._id}
-              changeSubWithStarter={changeSubWithStarter}
-              position="Mediocampista"
-              checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
-              fantasyPlayer={fantasyPlayer}
-              handleOpenModal={props.handleOpenModal}
-              setDraggedPosition={setDraggedPosition}
-              isSelected={isSelected}
-              hasOnDrag={"Mediocampista" === draggedPosition}
-            />
-          );
-        })}
-      </div>
-      <div className="grid grid-flow-col auto-cols-max justify-center gap-x-5 my-4">
-        {getPlayersByPosition("Delantero").map((fantasyPlayer) => {
-          return (
-            <PlayerCard
-              key={fantasyPlayer._id}
-              changeSubWithStarter={changeSubWithStarter}
-              checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
-              position="Delantero"
-              fantasyPlayer={fantasyPlayer}
-              handleOpenModal={props.handleOpenModal}
-              setDraggedPosition={setDraggedPosition}
-              isSelected={isSelected}
-              hasOnDrag={"Delantero" === draggedPosition}
-            />
-          );
-        })}
-      </div>
-      <div className="grid grid-flow-col auto-cols-max justify-center gap-x-5 my-4">
+      <div className="flex flex-row flex-wrap justify-center self-center  gap-x-1 gap-y-1">
         {getSubPlayers().map((fantasyPlayer) => {
           return (
             <PlayerCard
@@ -122,7 +120,6 @@ function FantasyTeamLineup(props) {
               checkIfPlayersCanBeChanged={checkIfPlayersCanBeChanged}
               draggable="true"
               fantasyPlayer={fantasyPlayer}
-              handleOpenModal={props.handleOpenModal}
               setDraggedPosition={setDraggedPosition}
               isSelected={isSelected}
               hasOnDrag={false}
@@ -130,7 +127,7 @@ function FantasyTeamLineup(props) {
           );
         })}
       </div>
-    </div>
+    </>
   );
 }
 

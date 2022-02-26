@@ -9,7 +9,7 @@ function MainLayout() {
   return (
     <>
       <Topnav />
-      <div className="flex bg-slate-900 h-screen">
+      <div className="flex bg-slate-900 min-h-screen">
         {authContext.isLoggedIn && <Sidenav />}
         <Outlet />
       </div>

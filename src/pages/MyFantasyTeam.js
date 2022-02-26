@@ -33,7 +33,7 @@ function MyFantasyTeam() {
     <>
       {isLoading && <p>Loading...</p>}
       {!isLoading && (
-        <div className="flex flex-col w-full">
+        <div className="grid grid-flow-row auto-rows-max w-full p-10">
           {!hasFantasyTeam && <Navigate to="new" />}
           {hasFantasyTeam && <FantasyTeamDetail fantasyTeam={fantasyTeam} />}
         </div>
