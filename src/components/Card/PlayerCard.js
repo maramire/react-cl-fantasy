@@ -10,7 +10,7 @@ function PlayerCard(props) {
     const fantasyPlayerId = e.target.id;
     e.dataTransfer.setData("player_id", fantasyPlayerId);
     setTimeout(() => {
-      props.setDraggedPosition(props.position);
+      props.setDraggedPosition(props.fantasyPlayer.player.position);
     }, 0);
   };
 
@@ -60,24 +60,26 @@ function PlayerCard(props) {
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
       />
-      {!props.isSelected && (
+      {!props.hasPlayer && (
         <button
-          className="text-black p-2 w-full rounded"
+          className="flex flex-col text-black p-5 w-full rounded w-20 bg-gray-300 hover:bg-gray-200"
           onClick={(e) => handleOpenModal(props.position, e)}
         >
           <div className="self-center">+</div>
         </button>
       )}
-      {props.isSelected && (
+      {props.hasPlayer && (
         <button
           title={props.fantasyPlayer.player.name}
-          position={props.position}
+          position={props.fantasyPlayer.player.position}
           id={props.fantasyPlayer._id}
           draggable={props.draggable}
           onDragStart={onDragStart}
           onDragEnd={onDragEnd}
           {...(props.hasOnDrag && { onDrop, onDragOver })}
-          onClick={(e) => handleOpenModal(props.position, e)}
+          onClick={(e) =>
+            handleOpenModal(props.fantasyPlayer.player.position, e)
+          }
           className={
             props.hasOnDrag
               ? "flex flex-col  max-w-20 max-h-30 rounded outline outline-offset-2 outline-cyan-800 hover:bg-gray-300"
